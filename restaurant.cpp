@@ -30,7 +30,7 @@ void getCustomerInfo(string &customerName, string &customerPhone)
     while (customerName.empty() ||
            customerName.find_first_not_of(" abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ") != string::npos)
     {
-        cout << "⚠️ Invalid name. Please enter a valid name (letters only): ";
+        cout << "✗ Invalid name. Please enter a valid name (letters only): ";
         getline(cin, customerName);
     }
 
@@ -41,7 +41,7 @@ void getCustomerInfo(string &customerName, string &customerPhone)
 
         if (customerPhone.length() < 10 || customerPhone.length() > 11)
         {
-            cout << "⚠️ Invalid length. Phone number must be 10 or 11 digits long.\n";
+            cout << "✗ Invalid length. Phone number must be 10 or 11 digits long.\n";
             continue;
         }
 
@@ -58,7 +58,7 @@ void getCustomerInfo(string &customerName, string &customerPhone)
 
         if (!isValid)
         {
-            cout << "⚠️ Invalid characters detected. Phone number must contain digits only.\n";
+            cout << "✗ Invalid characters detected. Phone number must contain digits only.\n";
             continue;
         }
 
@@ -106,7 +106,7 @@ void selectDeliveryRegion(string &selectedLocation, string &customerAddress)
 
 string selectCuisine()
 {
-    cout << "\n--- WHAT ARE YOU CRAVING TODAY? 🍽️ ---\n";
+    cout << "\n--- WHAT ARE YOU CRAVING TODAY? ---\n";
     cout << "[1] Western Food\n";
     cout << "[2] Korean Food\n";
     cout << "[3] Japanese Food\n";

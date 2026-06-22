@@ -56,7 +56,7 @@ void addItemToCart(
 
     if (isItemInCart(cart, chosenItem.name))
     {
-        cout << "\n⚠️ You've already added this item to your basket.\n";
+        cout << "\n✗ You've already added this item to your basket.\n";
         cout << "Please update the quantity from your basket instead.\n";
         return;
     }
@@ -127,14 +127,14 @@ void addItemToCart(
 
                     if (alreadyAdded)
                     {
-                        cout << "⚠️ " << addOn.name << " is already added.\n";
+                        cout << "✗ " << addOn.name << " is already added.\n";
                     }
                     else
                     {
                         finalUnitPrice += addOn.price;
                         selectedAddOns.push_back(addOn.name);
                         selectedAddOnPrices.push_back(addOn.price);
-                        cout << "✅ " << addOn.name << " added.\n";
+                        cout << "✓ " << addOn.name << " added.\n";
                     }
                 }
             }
@@ -154,7 +154,7 @@ void addItemToCart(
                     selectedAddOnPrices,
                     itemRemark});
 
-    cout << "\n✅ " << chosenItem.name << " added to your basket.\n";
+    cout << "\n✓ " << chosenItem.name << " added to your basket.\n";
 }
 
 bool handleBasket(vector<CartItem> &cart)
@@ -203,7 +203,7 @@ bool handleBasket(vector<CartItem> &cart)
         {
             int newQty = getValidInt("Enter new quantity: ", 1, 99);
             cart[itemNo - 1].quantity = newQty;
-            cout << "\n✅ Quantity updated successfully.\n";
+            cout << "\n✓ Quantity updated successfully.\n";
         }
         else if (editChoice == 2)
         {
@@ -212,7 +212,7 @@ bool handleBasket(vector<CartItem> &cart)
 
             if (confirmRemove == 'y')
             {
-                cout << "\n🗑️ "
+                cout << "\n "
                      << cart[itemNo - 1].name
                      << " removed from basket.\n";
 
@@ -220,7 +220,7 @@ bool handleBasket(vector<CartItem> &cart)
 
                 if (cart.empty())
                 {
-                    cout << "\n🛒 Your basket is now empty.\n";
+                    cout << "\n Your basket is now empty.\n";
                     return false;
                 }
             }

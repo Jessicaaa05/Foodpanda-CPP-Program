@@ -2,6 +2,8 @@
 #define DELIVERY_CPP
 
 #include "utils.cpp"
+#include <chrono>
+#include <ctime>
 
 string selectDeliveryService(int &serviceChoice)
 {
@@ -46,7 +48,38 @@ double calculateDeliveryFee(double distanceKm)
 
 int calculateETA(double distanceKm)
 {
-    return 10 + static_cast<int>(distanceKm * 3.5);
+    double constantSpeedKmh = 60.0;
+    double travelTimeHours = distanceKm / constantSpeedKmh;
+    int travelTimeMinutes = static_cast<int>(travelTimeHours * 60.0);
+    
+    // Ensure a minimum travel time of 5 minutes so near deliveries look realistic
+    if (travelTimeMinutes < 5) travelTimeMinutes = 5; 
+    
+    return travelTimeMinutes;
+}
+
+// Helper to get the current system time and add the ETA minutes to compute arrival time
+string getEstimatedArrivalTimeString(int etaMinutes, string &currentTimeStr)
+{
+    // get the current system clock time
+    auto now = chrono::system_clock::now();
+    time_t current_time = chrono::system_clock::to_time_t(now);
+    
+    // Format Current Time
+    char currentBuffer[20];
+    struct tm* timeInfo = localtime(&current_time);
+    strftime(currentBuffer, sizeof(currentBuffer), "%I:%M %p", timeInfo);
+    currentTimeStr = string(currentBuffer); // Passes current time back out
+
+    // add the ETA minutes to calculate arrival time
+    auto arrival_time_point = now + chrono::minutes(etaMinutes);
+    time_t arrival_time = chrono::system_clock::to_time_t(arrival_time_point);
+    
+    char arrivalBuffer[20];
+    struct tm* arrivalInfo = localtime(&arrival_time);
+    strftime(arrivalBuffer, sizeof(arrivalBuffer), "%I:%M %p", arrivalInfo);
+    
+    return string(arrivalBuffer);
 }
 
 string generateTrackingNumber()
@@ -83,7 +116,7 @@ bool checkoutOrder(
             break;
         }
 
-        cout << "⚠️ Please enter y or n only.\n";
+        cout << "✗ Please enter y or n only.\n";
         cin.clear();
         cin.ignore(10000, '\n');
     }
@@ -122,6 +155,8 @@ bool checkoutOrder(
         subtotal - discountApplied + deliveryFee + cutleryCharge;
 
     int predictedEtaMinutes = calculateETA(distanceKm);
+    string orderPlacementTime = "";
+    string estimatedArrivalTime = getEstimatedArrivalTimeString(predictedEtaMinutes, orderPlacementTime);
     string trackingNumber = generateTrackingNumber();
 
     cout << "\n==================================================\n";
@@ -149,7 +184,9 @@ bool checkoutOrder(
 
     if (serviceChoice == 1)
     {
-        cout << "ETA          : " << predictedEtaMinutes << " minutes\n";
+        cout << "Order Time   : " << orderPlacementTime << "\n";
+        cout << "Duration     : " << predictedEtaMinutes << " mins\n";
+        cout << "Est. Arrival : " << estimatedArrivalTime << "\n";
     }
     else
     {
@@ -172,14 +209,15 @@ bool checkoutOrder(
 
     if (receiptChoice == 3)
     {
-        cout << "\n❌ ORDER CANCELLED BY " << customerName << ".\n";
+        cout << "\n✗ ORDER CANCELLED BY " << customerName << ".\n";
         return true;
     }
 
     cout << "\n==================================================\n";
-    cout << "                  🎉 Order Confirmed!              \n";
+    cout << "                  Order Confirmed!                \n";
     cout << "==================================================\n";
     cout << "Tracking Number : " << trackingNumber << "\n";
+    cout << "Order Date/Time : " << orderPlacementTime << "\n";
 
     if (serviceChoice == 1)
     {
@@ -187,8 +225,8 @@ bool checkoutOrder(
         cout << "Your order has been sent to "
              << selectedRes.name << ".\n";
         cout << "The restaurant is preparing your food now.\n";
-        cout << "Estimated Delivery Window: "
-             << predictedEtaMinutes << " minutes\n";
+        cout << "Est. Reach Time : " 
+             << estimatedArrivalTime << " (" << predictedEtaMinutes << " mins transit)\n";
     }
     else
     {
@@ -199,7 +237,7 @@ bool checkoutOrder(
     }
 
     cout << "==================================================\n";
-    cout << "\nThank you for ordering with Foodpanda ❤️\n";
+    cout << "\nThank you for ordering with Foodpanda!\n";
     cout << "Enjoy your meal!\n";
 
     return true;

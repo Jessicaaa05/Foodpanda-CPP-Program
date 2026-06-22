@@ -101,13 +101,13 @@ int main()
         Restaurant selectedRes = selectRestaurant(availableRestaurants);
 
         cout << "\n==================================================\n";
-        cout << "         ✅ Restaurant Selected Successfully\n";
+        cout << "         ✓ Restaurant Selected Successfully\n";
         cout << "==================================================\n";
-        cout << "🍴 Restaurant : " << selectedRes.name << "\n";
-        cout << "📍 Location   : " << selectedRes.address << "\n";
-        cout << "⭐ Rating     : " << fixed << setprecision(1)
+        cout << " Restaurant : " << selectedRes.name << "\n";
+        cout << " Location   : " << selectedRes.address << "\n";
+        cout << " Rating     : " << fixed << setprecision(1)
              << selectedRes.rating << "/5\n";
-        cout << "🚚 Distance   : "
+        cout << " Distance   : "
              << to_string_with_precision(selectedRes.currentDistance, 1)
              << " km away\n";
 
@@ -210,7 +210,7 @@ int main()
 
                     if (confirmCancel == 'y')
                     {
-                        cout << "\n❌ ORDER CANCELLED BY "
+                        cout << "\n✗ ORDER CANCELLED BY "
                              << customerName << ".\n";
                         return 0;
                     }
