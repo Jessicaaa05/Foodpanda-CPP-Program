@@ -1,5 +1,4 @@
-#ifndef UTILS_CPP
-#define UTILS_CPP
+#include "utils.h"
 
 #include <iostream>
 #include <string>
@@ -11,45 +10,6 @@
 #include <cctype>
 
 using namespace std;
-
-struct AddOn
-{
-    int id;
-    string name;
-    double price;
-};
-
-struct MenuItem
-{
-    string name;
-    double price;
-    vector<int> allowedAddOnIds;
-};
-
-struct Restaurant
-{
-    int id;
-    string name;
-    string address;
-    string cuisineType;
-    string districtTag;
-    double rating;
-    double minSpendForDiscount;
-    double discountAmount;
-    vector<MenuItem> menu;
-    double currentDistance;
-};
-
-struct CartItem
-{
-    string name;
-    double basePrice;
-    double price;
-    int quantity;
-    vector<string> chosenAddOnNames;
-    vector<double> chosenAddOnPrices;
-    string remark;
-};
 
 string to_string_with_precision(double val, int precision = 1)
 {
@@ -165,5 +125,3 @@ void displayCart(const vector<CartItem> &cart)
     cout << "Subtotal: RM " << fixed << setprecision(2) << subtotal << "\n";
     cout << "==================================================\n";
 }
-
-#endif

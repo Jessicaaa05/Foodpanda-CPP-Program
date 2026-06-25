@@ -1,7 +1,9 @@
-#ifndef DELIVERY_CPP
-#define DELIVERY_CPP
+#include "utils.h"
+#include "delivery.h"
 
-#include "utils.cpp"
+#include <iostream>
+#include <iomanip>
+#include <ios>
 #include <chrono>
 #include <ctime>
 
@@ -116,7 +118,7 @@ bool checkoutOrder(
             break;
         }
 
-        cout << "✗ Please enter y or n only.\n";
+        cout << "⚠️ Please enter y or n only.\n";
         cin.clear();
         cin.ignore(10000, '\n');
     }
@@ -209,12 +211,12 @@ bool checkoutOrder(
 
     if (receiptChoice == 3)
     {
-        cout << "\n✗ ORDER CANCELLED BY " << customerName << ".\n";
+        cout << "\n❌ ORDER CANCELLED BY " << customerName << ".\n";
         return true;
     }
 
     cout << "\n==================================================\n";
-    cout << "                  Order Confirmed!                \n";
+    cout << "                  🎉 Order Confirmed!              \n";
     cout << "==================================================\n";
     cout << "Tracking Number : " << trackingNumber << "\n";
     cout << "Order Date/Time : " << orderPlacementTime << "\n";
@@ -242,5 +244,3 @@ bool checkoutOrder(
 
     return true;
 }
-
-#endif

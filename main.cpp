@@ -1,7 +1,12 @@
-#include "utils.cpp"
-#include "restaurant.cpp"
-#include "menu.cpp"
-#include "delivery.cpp"
+#include <iostream>
+#include <iomanip>
+#include <ios>
+#include <ctime>
+
+#include "dependencies/utils.h"
+#include "dependencies/restaurant.h"
+#include "dependencies/menu.h"
+#include "dependencies/delivery.h"
 
 int main()
 {
@@ -101,7 +106,7 @@ int main()
         Restaurant selectedRes = selectRestaurant(availableRestaurants);
 
         cout << "\n==================================================\n";
-        cout << "         ✓ Restaurant Selected Successfully\n";
+        cout << "         ✅ Restaurant Selected Successfully\n";
         cout << "==================================================\n";
         cout << " Restaurant : " << selectedRes.name << "\n";
         cout << " Location   : " << selectedRes.address << "\n";
@@ -210,7 +215,7 @@ int main()
 
                     if (confirmCancel == 'y')
                     {
-                        cout << "\n✗ ORDER CANCELLED BY "
+                        cout << "\n❌ ORDER CANCELLED BY "
                              << customerName << ".\n";
                         return 0;
                     }
